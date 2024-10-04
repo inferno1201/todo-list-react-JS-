@@ -5,26 +5,21 @@ import Message from "./components/Message"
 import "./App.css";
 import { useState } from "react";
 function App() {
-  
-  const [data,setData]=useState([]);
+   const initialData=[{taskname:"doodh",date:"10-10-100"},{taskname:"doodh lelo ",date:"10-10-100"},{taskname:"doodh lelo naa", date:"10-10-100"}]
+   const [data,setData]=useState(initialData);
 
-  const handleItem=(newTask,newDate)=>{
-      const finalData=[...data,...[{task:newTask,date:newDate}]];
-      setData(finalData);
-  }
+   const deleteHandler=(taskName)=>{
+    const finalData= data.filter(
+      (item) => item.taskname !== taskName);
+    setData(finalData);
+   }
 
-  const handleDelete=(taskName)=>{
-      const finalData= data.filter(
-        (item) => item.task !== taskName);
-      setData(finalData);
-  }   
   return (
     <div className="body">
       <center className="todo-container">
         <Header />
-        <AddItem addTask={handleItem}/>
-        {data.length === 0 && <Message></Message>}
-        {data.map((item)=>{return <Task task={item.task} date={item.date} deleteTask={handleDelete}/>})}
+        <AddItem  />
+        { data.map((index)=>{ return <Task task={index.taskname} date={index.date} deleteTask={deleteHandler} />})}
       </center>
     </div>
   );
